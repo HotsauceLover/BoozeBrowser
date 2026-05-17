@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Bradley's BoozeBrowser v0.4 Pass 1.6</title>
+  <title>Bradley's BoozeBrowser v0.4 Pass 1.7</title>
   <style>
     :root{
       --bg:#03050b; --panel:#090c16; --panel2:#0e1020; --chrome:#b8b8b8; --chromeDark:#787878;
@@ -89,6 +89,15 @@
     }
 
     @media (min-width:760px){.app-wrap{width:430px}.content{min-height:640px}}
+
+    /* Pass 1.7: remove the accidental dead/black spacer above the fixed Home action bar.
+       The phone-density pass left bottom padding on .content for older scrolling behavior;
+       after Pass 1.4/1.5 made the footer a real fixed flex area, that padding showed up as a
+       blank mask over the drink cards. Home now lets only the drink-list pane scroll. */
+    .content.screen-home{padding-bottom:7px;}
+    .content.screen-home .home-scroll{padding-bottom:0;}
+    @media (max-width:480px){.content.screen-home{padding-bottom:6px;}}
+    @media (max-width:370px){.content.screen-home{padding-bottom:5px;}}
   </style>
 </head>
 <body>
@@ -171,7 +180,7 @@
     editSelected:()=>{const d=selected(); state.draft=d; localStorage.setItem(DRAFT_KEY,JSON.stringify(d)); navigate('add')},
     pickPlaceholder:(type,id)=>{state.placeholder={type,id};toast('Placeholder selected'); navigate(state.draft?'add':'home',{skipUnsaved:true});},
     exportText:()=>{const text=drinks().map(d=>`${d.name}\nRating: ${ratingStars(d.rating)}\nBase: ${d.baseSpirit||''}\nGlass: ${d.glass||''}\nGarnish: ${d.garnish||''}\nWhere: ${d.whereTried||''}\n\nIngredients:\n${d.ingredients||''}\n\nMeasurements:\n${d.measurements||''}\n\nInstructions:\n${d.instructions||''}\n\nNotes:\n${d.notes||''}\n\n---`).join('\n\n');download('bradleys-boozebrowser-backup.txt',text);toast('Download complete: backup.txt')},
-    exportJSON:()=>{download('bradleys-boozebrowser-backup.json',JSON.stringify({version:'v0.4-pass1.6',exportedAt:new Date().toISOString(),drinks:drinks()},null,2),'application/json');toast('Download complete: backup.json')},
+    exportJSON:()=>{download('bradleys-boozebrowser-backup.json',JSON.stringify({version:'v0.4-pass1.7',exportedAt:new Date().toISOString(),drinks:drinks()},null,2),'application/json');toast('Download complete: backup.json')},
     saveDraftThenContinue:()=>{hideModal(); state.hasUnsaved=false; state.pendingNav?.();}, discardThenContinue:()=>{hideModal(); state.hasUnsaved=false; localStorage.removeItem(DRAFT_KEY); state.draft=null; state.pendingNav?.();}, keepEditing:()=>{hideModal();}
   };
   setStatus('Done'); render();

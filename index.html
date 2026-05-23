@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Bradley's BoozeBrowser v0.4 Pass 2.4.1</title>
+  <title>Bradley's BoozeBrowser v0.4 Pass 2.4.2</title>
   <style>
     :root{
       --bg:#03050b; --panel:#090c16; --panel2:#0e1020; --chrome:#b8b8b8; --chromeDark:#787878;
@@ -156,10 +156,10 @@
   function saveDrinks(drinks){localStorage.setItem(STORAGE_KEY,JSON.stringify(drinks));}
   function drinks(){return loadDrinks();}
   function selected(){return drinks().find(d=>d.id===state.selectedId)||drinks()[0];}
-  const BUILD_LABEL='Build v0.4.2.4.1';
+  const BUILD_LABEL='Build v0.4.2.4.2';
   function setStatus(msg){state.status=msg||BUILD_LABEL;}
-  function titleFor(screen){return ({home:'Saved Drinks',discover:'Discover',quick:'Quick Add',add:'Add Drink',detail:'Drink Detail',bartender:'Show Bartender',favorites:'Favorites',backup:'Backup & Export',placeholder:'Choose Placeholder',loading:'Loading...',minimized:'Minimized',closed:'Closed'})[screen]||'Saved Drinks';}
-  function addressFor(screen){return 'https://bradleysboozebrowser.app/'+(screen==='home'?'':screen);}
+  function titleFor(screen){ if(screen==='add' && state.draft?.id) return 'Edit Drink'; return ({home:'Saved Drinks',discover:'Discover',quick:'Quick Add',add:'Add Drink',detail:'Drink Detail',bartender:'Show Bartender',favorites:'Favorites',backup:'Backup & Export',placeholder:'Choose Placeholder',loading:'Loading...',minimized:'Minimized',closed:'Closed'})[screen]||'Saved Drinks';}
+  function addressFor(screen){ const path=(screen==='add' && state.draft?.id)?'edit':(screen==='home'?'':screen); return 'https://bradleysboozebrowser.app/'+path;}
   function navigate(to, opts={}){ if(state.hasUnsaved && !opts.skipUnsaved && to!==state.screen && to!=='loading'){ return unsavedDialog(()=>navigate(to,{...opts,skipUnsaved:true})); }
     const from=state.screen==='loading'?(state.loading?.prev||state.previousScreen||'home'):state.screen;
     if(!opts.skipHistory && from && from!==to && from!=='loading') state.history.push(from);
@@ -217,7 +217,7 @@
     return `<div class="backup-summary"><div class="backup-stat"><b>${s.total}</b><span>DRINKS</span></div><div class="backup-stat"><b>${s.favorites}</b><span>FAVORITES</span></div><div class="backup-stat"><b>${s.placeholders}</b><span>PLACEHOLDERS</span></div><div class="backup-stat"><b>${s.incomplete}</b><span>INCOMPLETE</span></div></div>`;
   }
   function backupPayload(){
-    return {app:'Bradley’s BoozeBrowser',build:BUILD_LABEL,version:'v0.4.2.4.1',exportedAt:new Date().toISOString(),summary:backupStats(),drinks:drinks()};
+    return {app:'Bradley’s BoozeBrowser',build:BUILD_LABEL,version:'v0.4.2.4.2',exportedAt:new Date().toISOString(),summary:backupStats(),drinks:drinks()};
   }
   function friendlyDate(value){
     if(!value) return 'Unknown';

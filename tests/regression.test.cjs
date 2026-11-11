@@ -20,10 +20,11 @@ const plain=x=>JSON.parse(JSON.stringify(x));
 function environment(seed=[original,incomplete], extraStorage={}, options={}){
   const values=new Map([[KEY,JSON.stringify(seed)],...Object.entries(extraStorage)]);
   const blockedWrites=new Set();
-  const elements=Object.fromEntries(['app','desktop-view','toast','modal'].map(id=>{
+  const elements=Object.fromEntries(['app','desktop-view','toast','modal','fullscreenToggle'].map(id=>{
     const classes=new Set();
     return [id,{
       innerHTML:'',textContent:'',hidden:id==='desktop-view',
+      setAttribute(name,value){this[name]=value;},
       classList:{
         add:name=>classes.add(name),
         remove:name=>classes.delete(name),
@@ -33,12 +34,26 @@ function environment(seed=[original,incomplete], extraStorage={}, options={}){
     }];
   }));
   const navigationTimers=[];
+  const listeners=new Map();
   let activeForm=null;
   class FormData {constructor(form){this.form=form;}entries(){return Object.entries(this.form.values);}}
   class FileReader {readAsText(file){this.result=file.text;this.onload();}}
   class Clock extends Date {constructor(...args){super(...(args.length?args:[1700000000000]));}static now(){return 1700000000000;}}
+  const document={
+    getElementById:id=>elements[id]||null,
+    querySelector:()=>activeForm,
+    createElement:()=>({click(){}}),
+    addEventListener:(type,listener)=>listeners.set(type,listener),
+    documentElement:{},
+    fullscreenElement:null,
+    fullscreenEnabled:false
+  };
+  const changeFullscreen=element=>{
+    document.fullscreenElement=element;
+    listeners.get('fullscreenchange')?.();
+  };
   const context={console,JSON,Date:Clock,Object,Array,String,Number,Boolean,Math,Set,Map,Error,SyntaxError,crypto:webcrypto,
-    document:{getElementById:id=>elements[id]||null,querySelector:()=>activeForm,createElement:()=>({click(){}})},
+    document,
     localStorage:{
       get length(){return values.size;},
       key:index=>[...values.keys()][index]??null,
@@ -60,7 +75,19 @@ function environment(seed=[original,incomplete], extraStorage={}, options={}){
     }};
   context.window=context;
   vm.createContext(context);vm.runInContext(source,context);
-  return {c:context,e:elements,values,blockedWrites,a:context.__audit,setForm:form=>{activeForm=form;},finishNavigation:()=>navigationTimers.shift()?.()};
+  return {c:context,e:elements,values,blockedWrites,a:context.__audit,changeFullscreen,setForm:form=>{activeForm=form;},finishNavigation:()=>navigationTimers.shift()?.()};
+}
+function mockFullscreen(env){
+  const doc=env.c.document;
+  const root=doc.documentElement;
+  const requests=[];
+  doc.fullscreenEnabled=true;
+  root.requestFullscreen=async options=>{
+    requests.push(plain(options));
+    env.changeFullscreen(root);
+  };
+  doc.exitFullscreen=async()=>env.changeFullscreen(null);
+  return {doc,root,requests};
 }
 function form(name, extra={}){
   return {dataset:{drinkForm:'full'},values:{name,rating:'4',ingredients:'Rum',measurements:'2 oz',instructions:'Stir.',notes:'Disposable fixture',...extra},favorite:{checked:false},recipeComplete:{checked:false},reportValidity:()=>true};
@@ -89,10 +116,10 @@ function importBackup(env, data){env.c.BB.importJSON({target:{files:[{text:typeo
 
 test('Alpha identity agrees across title, status and JSON export',()=>{
   const e=environment();const backup=e.a.backupPayload();
-  assert.match(html,/<title>[^<]*Alpha 3<\/title>/);
-  assert.equal(backup.version,'v0.5.0-alpha.3');
+  assert.match(html,/<title>[^<]*Alpha 4<\/title>/);
+  assert.equal(backup.version,'v0.5.0-alpha.4');
   assert.equal(backup.build,'Build '+backup.version);
-  assert.match(e.e.app.innerHTML,/Build v0\.5\.0-alpha\.3/);
+  assert.match(e.e.app.innerHTML,/Build v0\.5\.0-alpha\.4/);
 });
 test('opening an edit then Add creates a different identity and preserves the original',()=>{
   const e=environment();e.a.state.selectedId=original.id;e.c.BB.editSelected();e.c.BB.startAdd();
@@ -277,6 +304,88 @@ test('a draft storage error leaves the current form visible',()=>{
   assert.equal(e.e.app.classList.contains('app-minimized'),false);
   assert.equal(e.a.state.screen,'add');
   assert.match(e.e.toast.textContent,/Could not save this draft/);
+});
+test('fullscreen toggles the document and preserves the current draft through Minimize and Restore',async()=>{
+  const e=environment();
+  const {doc,root,requests}=mockFullscreen(e);
+  dirty(e,'Fullscreen draft');
+  const draftId=e.a.state.draft.id;
+  assert.match(e.e.app.innerHTML,/id="fullscreenToggle"[^>]+onclick="BB.maximize\(\)"/);
+  await e.c.BB.maximize();
+  assert.equal(doc.fullscreenElement,root);
+  assert.deepEqual(requests,[{navigationUI:'hide'}]);
+  assert.equal(e.e.fullscreenToggle['aria-label'],'Exit fullscreen');
+  e.c.BB.minimize();
+  e.c.BB.reopen();
+  assert.equal(doc.fullscreenElement,root);
+  assert.equal(e.a.state.screen,'add');
+  assert.equal(e.a.state.draft.id,draftId);
+  assert.equal(e.a.storedDrafts()[0].fields.name,'Fullscreen draft');
+  await e.c.BB.maximize();
+  assert.equal(doc.fullscreenElement,null);
+  assert.equal(e.e.fullscreenToggle['aria-label'],'Enter fullscreen');
+  assert.equal(e.a.state.hasUnsaved,true);
+});
+test('the fullscreen control tracks navigation and browser-initiated exits',async()=>{
+  const e=environment();
+  mockFullscreen(e);
+  await e.c.BB.maximize();
+  e.c.BB.bartender(original.id);
+  assert.equal(e.e.fullscreenToggle.textContent,'❐');
+  e.changeFullscreen(null);
+  assert.equal(e.e.fullscreenToggle.textContent,'□');
+  assert.equal(e.e.fullscreenToggle.title,'Enter fullscreen');
+  assert.equal(e.a.state.screen,'bartender');
+  assert.equal(e.a.state.selectedId,original.id);
+});
+test('unsupported and rejected fullscreen attempts leave the draft and page usable',async()=>{
+  const e=environment();
+  dirty(e,'Draft before fullscreen');
+  const draftId=e.a.state.draft.id;
+  await e.c.BB.maximize();
+  assert.match(e.e.toast.textContent,/Fullscreen is unavailable/);
+  const {doc,root}=mockFullscreen(e);
+  root.requestFullscreen=async()=>{throw new Error('Fullscreen denied');};
+  await e.c.BB.maximize();
+  assert.match(e.e.toast.textContent,/Could not enter fullscreen/);
+  assert.equal(doc.fullscreenElement,null);
+  assert.equal(e.e.fullscreenToggle['aria-label'],'Enter fullscreen');
+  assert.equal(e.a.state.screen,'add');
+  assert.equal(e.a.state.draft.id,draftId);
+  assert.equal(e.a.storedDrafts()[0].fields.name,'Draft before fullscreen');
+});
+test('Close exits fullscreen only after confirmation',async()=>{
+  const e=environment();
+  const {doc,root}=mockFullscreen(e);
+  await e.c.BB.maximize();
+  e.c.BB.close();
+  assert.match(e.e.modal.innerHTML,/Close Bradley/);
+  assert.equal(doc.fullscreenElement,root);
+  e.c.BB.keepEditing();
+  assert.equal(doc.fullscreenElement,root);
+  e.c.BB.close();
+  e.c.BB.confirmClose();
+  assert.equal(doc.fullscreenElement,null);
+  assert.equal(e.a.state.screen,'closed');
+});
+test('a fullscreen request that finishes during Close exits cleanly',async()=>{
+  const e=environment(undefined,{}, {deferNavigation:true});
+  const {doc,root}=mockFullscreen(e);
+  let finishRequest;
+  root.requestFullscreen=()=>new Promise(resolve=>{
+    finishRequest=()=>{
+      e.changeFullscreen(root);
+      resolve();
+    };
+  });
+  const pending=e.c.BB.maximize();
+  e.c.BB.close();
+  e.c.BB.confirmClose();
+  finishRequest();
+  await pending;
+  assert.equal(doc.fullscreenElement,null);
+  e.finishNavigation();
+  assert.equal(e.a.state.screen,'closed');
 });
 test('Close still asks for confirmation after resolving unsaved changes',()=>{
   const e=environment();dirty(e);e.c.BB.close();e.c.BB.discardThenContinue();

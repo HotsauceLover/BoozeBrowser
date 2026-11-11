@@ -20,7 +20,19 @@ const plain=x=>JSON.parse(JSON.stringify(x));
 function environment(seed=[original,incomplete], extraStorage={}, options={}){
   const values=new Map([[KEY,JSON.stringify(seed)],...Object.entries(extraStorage)]);
   const blockedWrites=new Set();
-  const elements=Object.fromEntries(['app','toast','modal'].map(id=>[id,{innerHTML:'',textContent:'',classList:{add(){},remove(){}}}]));
+  const elements=Object.fromEntries(['app','desktop-view','toast','modal'].map(id=>{
+    const classes=new Set();
+    return [id,{
+      innerHTML:'',textContent:'',hidden:id==='desktop-view',
+      classList:{
+        add:name=>classes.add(name),
+        remove:name=>classes.delete(name),
+        contains:name=>classes.has(name),
+        toggle:(name,show)=>show?classes.add(name):classes.delete(name)
+      }
+    }];
+  }));
+  const navigationTimers=[];
   let activeForm=null;
   class FormData {constructor(form){this.form=form;}entries(){return Object.entries(this.form.values);}}
   class FileReader {readAsText(file){this.result=file.text;this.onload();}}
@@ -39,10 +51,16 @@ function environment(seed=[original,incomplete], extraStorage={}, options={}){
     },
     FormData,FileReader,Blob:class {},URL:{createObjectURL:()=>'',revokeObjectURL(){}},
     navigator:options.noClipboard?{}:{clipboard:{writeText:async text=>{context.copied=text;}}},
-    setTimeout:(fn,delay)=>{if(delay===700)fn();return 1;}};
+    setTimeout:(fn,delay)=>{
+      if(delay===700){
+        if(options.deferNavigation) navigationTimers.push(fn);
+        else fn();
+      }
+      return 1;
+    }};
   context.window=context;
   vm.createContext(context);vm.runInContext(source,context);
-  return {c:context,e:elements,values,blockedWrites,a:context.__audit,setForm:form=>{activeForm=form;}};
+  return {c:context,e:elements,values,blockedWrites,a:context.__audit,setForm:form=>{activeForm=form;},finishNavigation:()=>navigationTimers.shift()?.()};
 }
 function form(name, extra={}){
   return {dataset:{drinkForm:'full'},values:{name,rating:'4',ingredients:'Rum',measurements:'2 oz',instructions:'Stir.',notes:'Disposable fixture',...extra},favorite:{checked:false},recipeComplete:{checked:false},reportValidity:()=>true};
@@ -71,10 +89,10 @@ function importBackup(env, data){env.c.BB.importJSON({target:{files:[{text:typeo
 
 test('Alpha identity agrees across title, status and JSON export',()=>{
   const e=environment();const backup=e.a.backupPayload();
-  assert.match(html,/<title>[^<]*Alpha 2<\/title>/);
-  assert.equal(backup.version,'v0.5.0-alpha.2');
+  assert.match(html,/<title>[^<]*Alpha 3<\/title>/);
+  assert.equal(backup.version,'v0.5.0-alpha.3');
   assert.equal(backup.build,'Build '+backup.version);
-  assert.match(e.e.app.innerHTML,/Build v0\.5\.0-alpha\.2/);
+  assert.match(e.e.app.innerHTML,/Build v0\.5\.0-alpha\.3/);
 });
 test('opening an edit then Add creates a different identity and preserves the original',()=>{
   const e=environment();e.a.state.selectedId=original.id;e.c.BB.editSelected();e.c.BB.startAdd();
@@ -172,10 +190,99 @@ test('saving from a warning cannot create a nameless drink',()=>{
   const e=environment();dirty(e,'   ');e.c.BB.nav('home');e.c.BB.saveDraftThenContinue();
   assert.equal(e.a.drinks().length,2);assert.equal(e.a.storedDrafts().length,1);assert.equal(e.a.state.screen,'add');assert.match(e.e.toast.textContent,/drink name/);
 });
+test('Minimize and Restore preserve the bartender card, selected drink and Back history',()=>{
+  const e=environment();
+  e.c.BB.open(incomplete.id);
+  e.c.BB.bartender(incomplete.id);
+  const history=plain(e.a.state.history);
+  e.c.BB.minimize();
+  assert.equal(e.e['desktop-view'].hidden,false);
+  assert.equal(e.e.app.classList.contains('app-minimized'),true);
+  e.c.BB.reopen();
+  assert.equal(e.e['desktop-view'].hidden,true);
+  assert.equal(e.e.app.classList.contains('app-minimized'),false);
+  assert.equal(e.a.state.screen,'bartender');
+  assert.equal(e.a.state.selectedId,incomplete.id);
+  assert.match(e.e.app.innerHTML,/Audit Incomplete/);
+  assert.deepEqual(plain(e.a.state.history),history);
+  e.c.BB.back();
+  assert.equal(e.a.state.screen,'detail');
+  assert.equal(e.a.state.selectedId,incomplete.id);
+});
+test('restoring a dirty edit preserves its target, draft and leave-form warning',()=>{
+  const e=environment();
+  e.c.BB.open(original.id);
+  e.c.BB.editSelected();
+  const f=form(original.name,{notes:'First edit note'});
+  typeDraft(e,f);
+  const draftId=e.a.state.draft.id;
+  f.values.notes='Latest edit note';
+  e.c.BB.minimize();
+  e.c.BB.reopen();
+  assert.equal(e.a.state.screen,'add');
+  assert.equal(e.a.state.draft.id,draftId);
+  assert.equal(e.a.state.draft.drinkId,original.id);
+  assert.equal(e.a.storedDrafts()[0].fields.notes,'Latest edit note');
+  assert.equal(e.a.drinks().find(d=>d.id===original.id).notes,original.notes);
+  e.c.BB.nav('home');
+  assert.match(e.e.modal.innerHTML,/Unsaved cocktail data detected/);
+});
+test('the restored placeholder picker still applies to the active Quick Add',()=>{
+  const e=environment();
+  e.c.BB.startQuick();
+  typeDraft(e,quickForm('Picker after Restore'));
+  const draftId=e.a.state.draft.id;
+  e.c.BB.choosePlaceholder();
+  e.setForm(null);
+  e.c.BB.minimize();
+  e.c.BB.reopen();
+  assert.equal(e.a.state.screen,'placeholder');
+  e.c.BB.pickPlaceholder('color','purple');
+  assert.equal(e.a.state.screen,'quick');
+  assert.equal(e.a.state.draft.id,draftId);
+  assert.equal(e.a.storedDrafts()[0].fields.placeholderId,'purple');
+  assert.match(e.e.app.innerHTML,/Picker after Restore/);
+});
+test('desktop shortcuts open their destinations and leave unfinished drinks recoverable',()=>{
+  const e=environment();
+  dirty(e,'Left on the desktop');
+  e.c.BB.minimize();
+  e.c.BB.openDesktopShortcut('backup');
+  assert.equal(e.e['desktop-view'].hidden,true);
+  assert.equal(e.a.state.screen,'backup');
+  assert.equal(e.a.storedDrafts()[0].fields.name,'Left on the desktop');
+  e.c.BB.minimize();
+  e.c.BB.openDesktopShortcut('home');
+  assert.equal(e.a.state.screen,'home');
+  assert.match(e.e.app.innerHTML,/<details class="draft-banner" open/);
+  assert.match(e.e.app.innerHTML,/Left on the desktop/);
+});
+test('a page that finishes loading while minimized is ready on Restore',()=>{
+  const e=environment(undefined,{}, {deferNavigation:true});
+  e.c.BB.open(incomplete.id);
+  assert.equal(e.a.state.screen,'loading');
+  e.c.BB.minimize();
+  e.finishNavigation();
+  assert.equal(e.e['desktop-view'].hidden,false);
+  e.c.BB.reopen();
+  assert.equal(e.a.state.screen,'detail');
+  assert.match(e.e.app.innerHTML,/Audit Incomplete/);
+});
+test('a draft storage error leaves the current form visible',()=>{
+  const e=environment();
+  dirty(e,'Keep the form open');
+  e.blockedWrites.add('bb_v05_draft:'+e.a.state.draft.id);
+  e.c.BB.minimize();
+  assert.equal(e.e['desktop-view'].hidden,true);
+  assert.equal(e.e.app.classList.contains('app-minimized'),false);
+  assert.equal(e.a.state.screen,'add');
+  assert.match(e.e.toast.textContent,/Could not save this draft/);
+});
 test('Close still asks for confirmation after resolving unsaved changes',()=>{
   const e=environment();dirty(e);e.c.BB.close();e.c.BB.discardThenContinue();
   assert.match(e.e.modal.innerHTML,/Close Bradley/);assert.notEqual(e.a.state.screen,'closed');
   e.c.BB.confirmClose();assert.equal(e.a.state.screen,'closed');
+  e.c.BB.reopen();assert.equal(e.a.state.screen,'home');
 });
 test('canceling Close after Discard cannot expose discarded form content',()=>{
   const e=environment();dirty(e,'Discard this form');e.c.BB.close();e.c.BB.discardThenContinue();e.c.BB.keepEditing();

@@ -1,0 +1,16 @@
+name: BoozeBrowser regression checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Run dependency-free regression checks
+        run: node --test tests/regression.test.cjs

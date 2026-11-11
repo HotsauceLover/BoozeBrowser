@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Bradley's BoozeBrowser v0.4 Pass 2.6</title>
+  <title>Bradley's BoozeBrowser v0.5 Alpha 1</title>
   <style>
     :root{
       --bg:#03050b; --panel:#090c16; --panel2:#0e1020; --chrome:#b8b8b8; --chromeDark:#787878;
@@ -33,7 +33,7 @@
     .section{border:1px solid var(--hot);box-shadow:0 0 8px rgba(255,58,166,.25);background:rgba(3,5,11,.76);padding:9px;border-radius:6px;margin:10px 0}.section-title{font-family:var(--font-mono);font-size:13px;color:var(--cyan);margin-bottom:7px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.row{display:flex;gap:8px;align-items:center}.between{display:flex;justify-content:space-between;gap:8px;align-items:center}.field{margin:9px 0}.field label{display:block;color:var(--hot);font-family:var(--font-mono);font-size:12px;margin-bottom:4px}.field input,.field textarea,.field select{width:100%;background:#07070b;color:var(--text);border:1px solid #7d2c67;box-shadow:inset 0 0 5px #000;padding:8px;border-radius:2px}.field textarea{min-height:72px;resize:vertical}.search-row{display:flex;gap:6px}.search-row input{flex:1;background:#f2f2f2;color:#111;border:2px inset #fff;padding:8px}.retro-btn{border:2px outset #e7dfff;background:linear-gradient(#7b25e2,#26006b);color:white;padding:9px 12px;border-radius:3px;box-shadow:0 0 6px rgba(0,232,255,.25);font-weight:700}.retro-btn.pink{background:linear-gradient(#ff59bb,#b70066);color:#111}.retro-btn.grey{background:#c8c8c8;color:#111}.retro-btn.blue{background:linear-gradient(#2774e8,#123681)}.retro-btn.full{width:100%}.small{font-size:11px;color:var(--muted)}.mono{font-family:var(--font-mono)}.cyan{color:var(--cyan)}.hot{color:var(--hot)}.yellow{color:var(--yellow)}
     .drink-card{display:grid;grid-template-columns:64px 1fr 30px;gap:9px;border:1px solid var(--hot);background:rgba(10,7,18,.92);border-radius:6px;padding:8px;margin:8px 0;align-items:center}.thumb{width:64px;height:64px;border:1px solid var(--yellow);border-radius:4px;background:#111;display:grid;place-items:center;font-size:34px;overflow:hidden}.thumb.lg{width:100%;height:134px;font-size:76px;background:radial-gradient(circle at 50% 30%,rgba(255,210,28,.25),transparent 35%),#090909;border-color:var(--hot)}.drink-name{font-family:var(--font-mono);font-size:15px;color:var(--cyan);line-height:1.12}.stars{letter-spacing:1px;color:var(--yellow);font-size:17px}.heart{font-size:24px;color:var(--hot);background:transparent;border:0;text-shadow:0 0 6px var(--hot)}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.recent-list{font-family:var(--font-mono);font-size:11px;line-height:1.8}.counter{font-family:var(--font-mono);font-size:10px;color:#eee;text-align:right;margin-top:6px}.hr{border:0;border-top:1px dashed var(--hot);margin:12px 0}.pill{border:1px solid var(--yellow);color:var(--yellow);padding:4px 7px;border-radius:12px;font-family:var(--font-mono);font-size:10px;display:inline-flex;gap:5px;align-items:center;background:rgba(255,210,28,.08)}
     .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;border:1px solid #23375e;margin:10px 0}.detail-grid div{padding:5px;border-bottom:1px solid #1a2441;font-family:var(--font-mono);font-size:10px}.detail-grid div:nth-child(odd){color:var(--hot)}.ingredient-table{width:100%;border-collapse:collapse;font-family:var(--font-mono);font-size:12px}.ingredient-table td{padding:6px 2px;border-bottom:1px dotted #66205d}.ingredient-table td:last-child{text-align:right;color:#fff}.bartender-card{border:1px solid var(--hot);border-radius:8px;padding:14px;background:rgba(7,4,12,.94);box-shadow:0 0 12px rgba(255,58,166,.25);font-family:var(--font-mono)}.bartender-card h2{color:var(--cyan);font-size:30px;line-height:1.05;margin-bottom:14px}.bartender-card .ingredient-table{font-size:16px}.bartender-card h3{color:var(--hot);font-size:14px;margin-top:16px}.placeholder-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.placeholder{border:1px solid var(--hot);border-radius:5px;min-height:62px;padding:4px;text-align:center;background:#0a0810}.placeholder .icon{font-size:28px}.placeholder .label{font-family:var(--font-mono);font-size:9px;color:#eee;overflow:hidden;text-overflow:ellipsis}.upload-box{border:1px dashed var(--text);min-height:80px;display:grid;place-items:center;text-align:center;border-radius:6px;padding:8px}.loading{display:grid;place-items:center;text-align:center;min-height:360px}.hourglass{border:1px dashed var(--hot);padding:24px;font-size:54px;margin:24px auto;width:112px}.progress{height:24px;border:2px solid var(--hot);max-width:290px;margin:18px auto;background:#09050e}.bar{height:100%;background:linear-gradient(90deg,#ff3aa6,#8228ff);width:55%}.desktop{height:100dvh;background:linear-gradient(rgba(0,232,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,58,166,.05) 1px,transparent 1px),radial-gradient(circle at 80% 25%,rgba(255,58,166,.18),transparent 35%),#030511;background-size:18px 18px,18px 18px,100% 100%;padding:22px;display:flex;flex-direction:column;justify-content:space-between}.desktop-icons{display:grid;gap:18px;width:90px}.desktop-icon{text-align:center;font-family:var(--font-mono);font-size:12px;color:#fff;text-shadow:1px 1px #000}.desktop-icon .big{font-size:34px}.taskbar{height:42px;background:#bdbdbd;border:2px outset #fff;display:flex;align-items:center;gap:8px;color:#111;padding:3px}.task-item{border:2px inset #fff;background:#8da5be;padding:6px 10px;font-family:var(--font-mono);font-size:11px;flex:1}.closed-center{text-align:center;margin-top:70px}.closed-center h1{font-family:var(--font-mono);color:var(--cyan);font-size:34px;line-height:1.25;text-shadow:2px 2px var(--hot)}
-    .hidden{display:none!important}.toast{position:fixed;left:50%;bottom:86px;transform:translateX(-50%);background:#111;border:1px solid var(--cyan);color:var(--cyan);padding:8px 12px;border-radius:4px;font-family:var(--font-mono);font-size:12px;box-shadow:0 0 12px rgba(0,232,255,.35);z-index:5}.draft-banner{border:1px solid var(--yellow);padding:8px;margin-bottom:10px;color:var(--yellow);background:rgba(255,210,28,.08);font-family:var(--font-mono);font-size:11px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:grid;place-items:center;z-index:20;padding:18px}.modal-box{width:min(360px,100%);background:#0a0712;border:2px solid var(--hot);box-shadow:var(--shadow);padding:14px}.modal-box h3{font-family:var(--font-mono);color:var(--cyan);margin-bottom:8px}.modal-box .actions{grid-template-columns:1fr}.photo-modal-thumb{height:210px;margin:10px 0;border:1px solid var(--yellow);border-radius:6px;background:radial-gradient(circle at 50% 28%,rgba(255,210,28,.25),transparent 38%),#090909;display:grid;place-items:center;font-size:96px;box-shadow:0 0 12px rgba(255,58,166,.22)}.shake{animation:flicker .7s steps(2,end)}@keyframes flicker{0%,100%{opacity:1}40%{opacity:.7}55%{opacity:.92}70%{opacity:.75}}
+    .hidden{display:none!important}.toast{position:fixed;left:50%;bottom:86px;transform:translateX(-50%);background:#111;border:1px solid var(--cyan);color:var(--cyan);padding:8px 12px;border-radius:4px;font-family:var(--font-mono);font-size:12px;box-shadow:0 0 12px rgba(0,232,255,.35);z-index:5}.draft-banner{border:1px solid var(--yellow);padding:8px;margin-bottom:10px;color:var(--yellow);background:rgba(255,210,28,.08);font-family:var(--font-mono);font-size:11px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:grid;place-items:center;z-index:20;padding:18px}.modal-box{width:min(360px,100%);background:#0a0712;border:2px solid var(--hot);box-shadow:var(--shadow);padding:14px;max-height:calc(100dvh - 36px);overflow-y:auto}.modal-box h3{font-family:var(--font-mono);color:var(--cyan);margin-bottom:8px}.modal-box .actions{grid-template-columns:1fr}.photo-modal-thumb{height:210px;margin:10px 0;border:1px solid var(--yellow);border-radius:6px;background:radial-gradient(circle at 50% 28%,rgba(255,210,28,.25),transparent 38%),#090909;display:grid;place-items:center;font-size:96px;box-shadow:0 0 12px rgba(255,58,166,.22)}.shake{animation:flicker .7s steps(2,end)}@keyframes flicker{0%,100%{opacity:1}40%{opacity:.7}55%{opacity:.92}70%{opacity:.75}}
 
     /* Pass 1.2: compact phone-height tuning so key screens feel less vertically stretched. */
     @media (max-width:520px){
@@ -145,6 +145,11 @@
   @media (max-width:370px){.finish-card{grid-template-columns:1fr 74px}.finish-card .retro-btn{font-size:11px;padding:6px 5px}.incomplete-badge{font-size:8px;padding:3px 5px}}
 
 
+  /* Alpha 1: readable import review and copy fallback within the existing shell. */
+  .import-review{margin-top:9px;padding:8px;border:1px solid var(--yellow);border-radius:5px}
+  .import-review summary{cursor:pointer;color:var(--cyan);font-family:var(--font-mono);font-size:12px}
+  .import-review ul{padding-left:18px;line-height:1.5}
+  #copyRecipeText{min-height:190px;width:100%;font-family:var(--font-mono);font-size:12px}
 </style>
 </head>
 <body>
@@ -257,7 +262,8 @@
     else BB.saveDraftFromForm(form);
   }
   migrateLegacyDraft();
-  const BUILD_LABEL='Build v0.4.2.6';
+  const BUILD_VERSION='v0.5.0-alpha.1';
+  const BUILD_LABEL='Build '+BUILD_VERSION;
   function setStatus(msg){state.status=msg||BUILD_LABEL;}
   function titleFor(screen){ if(screen==='add' && isEditingForm()) return 'Edit Drink'; return ({home:'Saved Drinks',discover:'Discover',quick:'Quick Add',add:'Add Drink',detail:'Drink Detail',bartender:'Show Bartender',favorites:'Favorites',backup:'Backup & Export',placeholder:'Choose Placeholder',loading:'Loading...',minimized:'Minimized',closed:'Closed'})[screen]||'Saved Drinks';}
   function addressFor(screen){ const path=(screen==='add' && isEditingForm())?'edit':(screen==='home'?'':screen); return 'https://bradleysboozebrowser.app/'+path;}
@@ -321,14 +327,14 @@
   function bottomnav(active){const items=[['discover','🔍','Discover','BB.nav(\'discover\')'],['saved','💾','Saved','BB.nav(\'home\')'],['add','➕','Add','BB.startAdd()'],['backup','🧾','Backup','BB.nav(\'backup\')'],['favorites','💗','Favorites','BB.nav(\'favorites\')']]; return `<nav class="bottomnav">${items.map(i=>`<button class="navbtn ${active===i[0]?'active':''}" onclick="${i[3]}"><div>${i[1]}</div><span>${i[2]}</span></button>`).join('')}</nav>`;}
   function homeListHTML(){ const all=drinks().filter(d=>d.name.toLowerCase().includes(state.search.toLowerCase())); const recent=recentDrinks(); return `<div class="section"><div class="section-title">Recently Opened:</div><div class="recent-list">${recent.length?recent.map(d=>`🍹 <button class="heart small" style="font-size:12px;color:white" onclick="BB.open('${d.id}')">${esc(d.name)}</button>`).join('<br>'):'No drinks opened yet.'}</div></div><div class="section-title">Saved Drinks (${all.length})</div>${all.map(card).join('')||'<div class="section">No saved drinks match that search.</div>'}`;}
   function home(){ const footer=`<div class="actions"><button class="retro-btn" onclick="BB.startAdd()">＋ Add Drink</button><button class="retro-btn" onclick="BB.startQuick()">⚡ Quick Add</button></div>`; return shell(`<div class="home-static">${draftSummaryHTML()}<div class="logo"><div class="logo-mark">🍸</div><div><div class="logo-text"><b>Bradley's</b><br>BoozeBrowser</div><div class="tagline">Your personal cocktail notebook.</div></div></div><div class="search-row"><input id="drinkSearch" value="${esc(state.search)}" oninput="BB.search(this.value)" placeholder="Search your saved drinks..." autocomplete="off" autocapitalize="off" spellcheck="false"/><button id="clearSearchBtn" class="retro-btn grey" type="button" onclick="BB.clearSearch()" style="display:${state.search?'inline-block':'none'}">Clear</button></div></div><div class="home-scroll">${homeListHTML()}</div>`,'saved',footer);}
-  function quick(){ const d=state.formMode==='new' && state.draft?.mode==='quick'?state.draft:{}; const ph=state.placeholder||((d.placeholderId&&d.placeholderType)?{type:d.placeholderType,id:d.placeholderId}:null); const skipped=!!(state.imageSkipped||d.imageSkipped); const imageControls=!(ph||d.placeholderId)?(skipped?skippedImageNote():noImagePrompt()):`<div class="image-actions"><button type="button" class="retro-btn" onclick="BB.choosePlaceholder()">Change Placeholder</button><button type="button" class="retro-btn grey" onclick="BB.skipImagePrompt(this)">Skip for now</button></div>`; return shell(`<h1 class="cyan mono">Quick Add <span class="hot" style="float:right">ϟ</span></h1><p class="small">Save the memory now. Fill in the recipe later.</p><form data-drink-form="quick" data-form-mode="new" oninput="BB.saveQuickDraftFromForm(this)" onsubmit="BB.saveQuick(event)"><div class="field"><label>Drink Name</label><input name="name" required placeholder="e.g. Jungle Bird" value="${esc(d.name||'')}"></div><div class="field"><label>Where I Tried It</label><input name="whereTried" placeholder="e.g. Neon Palms Bar, Tokyo" value="${esc(d.whereTried||'')}"></div><div class="field"><label>Rating</label><select name="rating">${[5,4,3,2,1,0].map(n=>`<option value="${n}" ${Number(d.rating||4)===n?'selected':''}>${ratingStars(n)}</option>`).join('')}</select></div><div class="field"><label>Quick Note</label><textarea name="notes" placeholder="e.g. Super refreshing. Less sweet if possible.">${esc(d.notes||'')}</textarea></div><div class="section between"><span class="cyan mono">Recipe needed later</span><input name="recipeNeededLater" type="checkbox" ${d.recipeNeededLater===false?'':'checked'}></div><div class="section"><div class="section-title">Drink Image / Placeholder</div>${imagePreview({placeholderId:ph?.id||d.placeholderId||'generic',placeholderType:ph?.type||d.placeholderType||'generic'}, {title: ph||d.placeholderId?'Selected placeholder':'Current placeholder'})}${imageControls}</div><button class="retro-btn pink full">Save Quick Add</button><button type="button" class="retro-btn full" style="margin-top:9px" onclick="BB.switchQuickToFull()">Full Add Mode</button><button type="button" class="retro-btn grey full" style="margin-top:9px" onclick="BB.cancelEdit()">Cancel</button></form>`,'add');}
-    function add(){ const d=state.draft||{}; const isEdit=isEditingForm(); const incomplete=isIncomplete(d); const skipped=!!(state.imageSkipped||d.imageSkipped); const editCopy=incomplete?`<p class="small">This drink was saved from Quick Add. Add ingredients, measurements, and instructions to finish the recipe.</p>`:(isEdit?`<p class="small">Updating existing saved drink. Changes overwrite this drink instead of creating a duplicate.</p>`:''); const completeBlock=(isEdit&&incomplete)?`<div class="section complete-check"><label><input type="checkbox" name="recipeComplete"> <span><span class="hot mono">Recipe is complete</span><br><span class="small">Check this when ingredients, measurements, and instructions are ready enough to use.</span></span></label></div>`:''; const hasPlaceholder=!!(state.placeholder||d.placeholderId); const imageControls=!hasPlaceholder?(skipped?skippedImageNote():noImagePrompt()):`<div class="image-actions"><button type="button" class="retro-btn" onclick="BB.choosePlaceholder()">Change Placeholder</button><button type="button" class="retro-btn grey" onclick="BB.skipImagePrompt(this)">Skip for now</button></div><p class="small">Real photo upload is saved for a later 2.x update.</p>`; return shell(`<h1 class="hot mono">${isEdit?'Edit Drink':'Add a New Drink'} <span style="float:right">${isEdit?'🛠️':'🍹'}</span></h1>${editCopy}<form data-drink-form="full" data-form-mode="${isEdit?'edit':'new'}" oninput="BB.saveDraftFromForm(this)" onsubmit="BB.saveFull(event)"><input type="hidden" name="id" value="${isEdit?esc(d.id||''):''}">${incomplete?'<div class="incomplete-badge">⚠ Recipe Incomplete</div>':''}${field('Drink Name','name',d.name,'e.g. Spicy Pineapple Margarita',true)}${field('Base Spirit','baseSpirit',d.baseSpirit,'e.g. Tequila')}<div class="field"><label>Ingredients</label><textarea name="ingredients" placeholder="List ingredients...">${esc(d.ingredients||'')}</textarea></div><div class="field"><label>Measurements</label><textarea name="measurements" placeholder="List measurements...">${esc(d.measurements||'')}</textarea></div><div class="field"><label>Instructions</label><textarea name="instructions" placeholder="How to make it...">${esc(d.instructions||'')}</textarea></div>${field('Garnish','garnish',d.garnish,'e.g. Pineapple wedge')}${field('Glass','glass',d.glass,'e.g. Rocks Glass')}${field('Where I Tried It','whereTried',d.whereTried,'e.g. Neon Palms Bar')}<div class="field"><label>Rating</label><select name="rating">${[5,4,3,2,1,0].map(n=>`<option value="${n}" ${Number(d.rating||4)===n?'selected':''}>${ratingStars(n)}</option>`).join('')}</select></div><div class="field"><label>Notes</label><textarea name="notes" placeholder="Any notes about this drink...">${esc(d.notes||'')}</textarea></div>${completeBlock}<div class="section"><label><input type="checkbox" name="favorite" ${d.favorite?'checked':''}> <span class="hot mono">Favorite this drink</span></label></div><div class="section"><div class="section-title">Drink Image / Placeholder</div>${imagePreview({placeholderId:state.placeholder?.id||d.placeholderId||'generic',placeholderType:state.placeholder?.type||d.placeholderType||'generic'}, {title:(state.placeholder||d.placeholderId)?'Selected placeholder':'Current placeholder'})}${imageControls}</div><div class="actions"><button class="retro-btn pink">💾 ${isEdit?'Update Drink':'Save Drink'}</button><button type="button" class="retro-btn grey" onclick="BB.cancelEdit()">Cancel</button></div>${isEdit?`<div class="section danger-zone"><div class="section-title">Danger Zone</div><p class="small">Delete removes this drink from Saved Drinks, Recently Opened, Favorites, and future backups.</p><button type="button" class="retro-btn full danger" onclick="BB.deleteSelected()">🗑 Delete Drink</button></div>`:''}</form>`,'add');}
+  function quick(){ const d=state.formMode==='new' && state.draft?.mode==='quick'?state.draft:{}; const ph=state.placeholder||((d.placeholderId&&d.placeholderType)?{type:d.placeholderType,id:d.placeholderId}:null); const skipped=!!(state.imageSkipped||d.imageSkipped); const imageControls=!(ph||d.placeholderId)?(skipped?skippedImageNote():noImagePrompt()):`<div class="image-actions"><button type="button" class="retro-btn" onclick="BB.choosePlaceholder()">Change Placeholder</button><button type="button" class="retro-btn grey" onclick="BB.skipImagePrompt(this)">Skip for now</button></div>`; return shell(`<h1 class="cyan mono">Quick Add <span class="hot" style="float:right">ϟ</span></h1><p class="small">Save the memory now. Fill in the recipe later.</p><form data-drink-form="quick" data-form-mode="new" oninput="BB.saveQuickDraftFromForm(this)" onsubmit="BB.saveQuick(event)"><div class="field"><label>Drink Name</label><input name="name" required placeholder="e.g. Jungle Bird" value="${esc(d.name||'')}"></div><div class="field"><label>Where I Tried It</label><input name="whereTried" placeholder="e.g. Neon Palms Bar, Tokyo" value="${esc(d.whereTried||'')}"></div><div class="field"><label>Rating</label><select name="rating">${[5,4,3,2,1,0].map(n=>`<option value="${n}" ${Number(d.rating??4)===n?'selected':''}>${ratingStars(n)}</option>`).join('')}</select></div><div class="field"><label>Quick Note</label><textarea name="notes" placeholder="e.g. Super refreshing. Less sweet if possible.">${esc(d.notes||'')}</textarea></div><div class="section between"><span class="cyan mono">Recipe needed later</span><input name="recipeNeededLater" type="checkbox" ${d.recipeNeededLater===false?'':'checked'}></div><div class="section"><div class="section-title">Drink Image / Placeholder</div>${imagePreview({placeholderId:ph?.id||d.placeholderId||'generic',placeholderType:ph?.type||d.placeholderType||'generic'}, {title: ph||d.placeholderId?'Selected placeholder':'Current placeholder'})}${imageControls}</div><button class="retro-btn pink full">Save Quick Add</button><button type="button" class="retro-btn full" style="margin-top:9px" onclick="BB.switchQuickToFull()">Full Add Mode</button><button type="button" class="retro-btn grey full" style="margin-top:9px" onclick="BB.cancelEdit()">Cancel</button></form>`,'add');}
+    function add(){ const d=state.draft||{}; const isEdit=isEditingForm(); const incomplete=isIncomplete(d); const skipped=!!(state.imageSkipped||d.imageSkipped); const editCopy=incomplete?`<p class="small">This drink was saved from Quick Add. Add ingredients, measurements, and instructions to finish the recipe.</p>`:(isEdit?`<p class="small">Updating existing saved drink. Changes overwrite this drink instead of creating a duplicate.</p>`:''); const completeBlock=(isEdit&&incomplete)?`<div class="section complete-check"><label><input type="checkbox" name="recipeComplete"> <span><span class="hot mono">Recipe is complete</span><br><span class="small">Check this when ingredients, measurements, and instructions are ready enough to use.</span></span></label></div>`:''; const hasPlaceholder=!!(state.placeholder||d.placeholderId); const imageControls=!hasPlaceholder?(skipped?skippedImageNote():noImagePrompt()):`<div class="image-actions"><button type="button" class="retro-btn" onclick="BB.choosePlaceholder()">Change Placeholder</button><button type="button" class="retro-btn grey" onclick="BB.skipImagePrompt(this)">Skip for now</button></div><p class="small">Real photo upload is saved for a later 2.x update.</p>`; return shell(`<h1 class="hot mono">${isEdit?'Edit Drink':'Add a New Drink'} <span style="float:right">${isEdit?'🛠️':'🍹'}</span></h1>${editCopy}<form data-drink-form="full" data-form-mode="${isEdit?'edit':'new'}" oninput="BB.saveDraftFromForm(this)" onsubmit="BB.saveFull(event)"><input type="hidden" name="id" value="${isEdit?esc(d.id||''):''}">${incomplete?'<div class="incomplete-badge">⚠ Recipe Incomplete</div>':''}${field('Drink Name','name',d.name,'e.g. Spicy Pineapple Margarita',true)}${field('Base Spirit','baseSpirit',d.baseSpirit,'e.g. Tequila')}<div class="field"><label>Ingredients</label><textarea name="ingredients" placeholder="List ingredients...">${esc(d.ingredients||'')}</textarea></div><div class="field"><label>Measurements</label><textarea name="measurements" placeholder="List measurements...">${esc(d.measurements||'')}</textarea></div><div class="field"><label>Instructions</label><textarea name="instructions" placeholder="How to make it...">${esc(d.instructions||'')}</textarea></div>${field('Garnish','garnish',d.garnish,'e.g. Pineapple wedge')}${field('Glass','glass',d.glass,'e.g. Rocks Glass')}${field('Where I Tried It','whereTried',d.whereTried,'e.g. Neon Palms Bar')}<div class="field"><label>Rating</label><select name="rating">${[5,4,3,2,1,0].map(n=>`<option value="${n}" ${Number(d.rating??4)===n?'selected':''}>${ratingStars(n)}</option>`).join('')}</select></div><div class="field"><label>Notes</label><textarea name="notes" placeholder="Any notes about this drink...">${esc(d.notes||'')}</textarea></div>${completeBlock}<div class="section"><label><input type="checkbox" name="favorite" ${d.favorite?'checked':''}> <span class="hot mono">Favorite this drink</span></label></div><div class="section"><div class="section-title">Drink Image / Placeholder</div>${imagePreview({placeholderId:state.placeholder?.id||d.placeholderId||'generic',placeholderType:state.placeholder?.type||d.placeholderType||'generic'}, {title:(state.placeholder||d.placeholderId)?'Selected placeholder':'Current placeholder'})}${imageControls}</div><div class="actions"><button class="retro-btn pink">💾 ${isEdit?'Update Drink':'Save Drink'}</button><button type="button" class="retro-btn grey" onclick="BB.cancelEdit()">Cancel</button></div>${isEdit?`<div class="section danger-zone"><div class="section-title">Danger Zone</div><p class="small">Delete removes this drink from Saved Drinks, Recently Opened, Favorites, and future backups.</p><button type="button" class="retro-btn full danger" onclick="BB.deleteSelected()">🗑 Delete Drink</button></div>`:''}</form>`,'add');}
 
   function field(label,name,val='',ph='',req=false){return `<div class="field"><label>${label}</label><input name="${name}" value="${esc(val||'')}" placeholder="${ph}" ${req?'required':''}></div>`;}
   function detail(){ const d=selected(); const incomplete=isIncomplete(d); return shell(`<h1 class="cyan mono">${esc(d.name)}</h1>${drinkThumb(d,true)}<div class="between"><div><span class="hot">♥</span> <span class="small">${esc(d.flavor||d.notes||'Saved cocktail')}</span>${recipeBadgeHTML(d)}</div><div class="stars">${ratingStars(d.rating)}</div></div><div class="detail-grid"><div>Base Spirit</div><div>${esc(d.baseSpirit||'—')}</div><div>Glass</div><div>${esc(d.glass||'—')}</div><div>Where I Tried It</div><div>${esc(d.whereTried||'—')}</div><div>Garnish</div><div>${esc(d.garnish||'—')}</div></div>${incomplete?`<div class="section recipe-incomplete-box"><div class="section-title">Recipe Incomplete</div><p class="small">This was saved from Quick Add. Add ingredients, measurements, and instructions when you are ready.</p><button class="retro-btn full" onclick="BB.finishRecipe('${d.id}')">Finish Recipe</button></div>`:''}<div class="section"><div class="section-title">Ingredients</div>${ingredientTable(d)}</div><div class="section"><div class="section-title">Notes</div><div class="small">${esc(d.notes||'No notes yet.')}</div></div><div class="actions"><button class="retro-btn blue" onclick="BB.nav('bartender')">👨‍🍳 Show Bartender</button><button class="retro-btn" onclick="BB.editSelected()">Edit Drink</button></div>`,'saved');}
 
   function ingredientTable(d){ const ing=(d.ingredients||'').split('\n').filter(Boolean), meas=(d.measurements||'').split('\n'); if(!ing.length) return '<p class="small">No ingredients saved yet.</p>'; return `<table class="ingredient-table">${ing.map((x,i)=>`<tr><td>${esc(x)}</td><td>${esc(meas[i]||'')}</td></tr>`).join('')}</table>`;}
-  function bartender(){ const d=selected(); const recipe=[d.name,'',...(d.ingredients||'').split('\n').map((x,i)=>`${x} ${(d.measurements||'').split('\n')[i]||''}`),'',d.garnish?`Garnish: ${d.garnish}`:'',d.glass?`Glass: ${d.glass}`:'',d.notes?`Note: ${d.notes}`:''].filter(Boolean).join('\n'); return shell(`<div class="bartender-card"><h2>${esc(d.name)}</h2><div class="small" style="font-size:14px;margin-bottom:10px"><span class="hot">♥</span> ${esc(d.flavor||'Cocktail recipe')}</div><h3>INGREDIENTS</h3>${ingredientTable(d)}<h3>GARNISH</h3><p>${esc(d.garnish||'—')}</p><h3>GLASS</h3><p>${esc(d.glass||'—')}</p><h3>NOTE TO BARTENDER</h3><p>${esc(d.notes||'')}</p>${d.instructions?`<h3>INSTRUCTIONS</h3><p>${esc(d.instructions)}</p>`:''}</div><div class="actions"><button class="retro-btn grey" onclick="BB.toDetail()">Drink Detail</button><button class="retro-btn pink" onclick="BB.copyRecipe(${JSON.stringify(recipe)})">💾 Copy Recipe</button></div><button class="retro-btn full" style="margin-top:9px" onclick="BB.showDrinkPhoto()">Show Drink Photo</button>`,'saved');}
+  function bartender(){ const d=selected(); return shell(`<div class="bartender-card"><h2>${esc(d.name)}</h2><div class="small" style="font-size:14px;margin-bottom:10px"><span class="hot">♥</span> ${esc(d.flavor||'Cocktail recipe')}</div><h3>INGREDIENTS</h3>${ingredientTable(d)}<h3>GARNISH</h3><p>${esc(d.garnish||'—')}</p><h3>GLASS</h3><p>${esc(d.glass||'—')}</p><h3>NOTE TO BARTENDER</h3><p>${esc(d.notes||'')}</p>${d.instructions?`<h3>INSTRUCTIONS</h3><p>${esc(d.instructions)}</p>`:''}</div><div class="actions"><button class="retro-btn grey" onclick="BB.toDetail()">Drink Detail</button><button class="retro-btn pink" onclick="BB.copyRecipe()">💾 Copy Recipe</button></div><button class="retro-btn full" style="margin-top:9px" onclick="BB.showDrinkPhoto()">Show Drink Photo</button>`,'saved');}
 
   function discover(){ return shell(`<h1 class="cyan mono">🔍 Discover</h1>${finishListHTML()}<div class="section" style="text-align:center;padding:20px 14px"><div style="font-size:44px">🍹</div><h2 class="hot mono" style="margin:8px 0">Coming Soon</h2><p class="small" style="font-size:14px;line-height:1.45">Random drink ideas and “what should I try next?” tools will live here later.</p><div class="hr"></div><p class="small">For now, Discover also helps surface unfinished Quick Add recipes so they do not get lost.</p><button class="retro-btn pink full" onclick="BB.nav('home')">Return to Saved Drinks</button></div>`,'discover');}
 
@@ -347,7 +353,61 @@
     return `<div class="backup-summary"><div class="backup-stat"><b>${s.total}</b><span>DRINKS</span></div><div class="backup-stat"><b>${s.favorites}</b><span>FAVORITES</span></div><div class="backup-stat"><b>${s.placeholders}</b><span>PLACEHOLDERS</span></div><div class="backup-stat"><b>${s.incomplete}</b><span>INCOMPLETE</span></div></div>`;
   }
   function backupPayload(){
-    return {app:'Bradley’s BoozeBrowser',build:BUILD_LABEL,version:'v0.4.2.6',exportedAt:new Date().toISOString(),summary:backupStats(),drinks:drinks()};
+    return {app:'Bradley’s BoozeBrowser',build:BUILD_LABEL,version:BUILD_VERSION,exportedAt:new Date().toISOString(),summary:backupStats(),drinks:drinks()};
+  }
+  function reviewBackup(text){
+    const data=JSON.parse(text);
+    const incoming=Array.isArray(data)?data:data?.drinks;
+    if(!Array.isArray(incoming)) throw new Error('This file does not contain a drinks list.');
+    const issues=[], repairs=[], cleaned=[];
+    const used=new Set();
+    const reserved=new Set(incoming.filter(d=>d && typeof d==='object' && !Array.isArray(d)).map(d=>d.id).filter(id=>typeof id==='string'));
+    const textFields=['baseSpirit','ingredients','measurements','instructions','garnish','glass','whereTried','notes','flavor','imageType','placeholderType','placeholderId'];
+    const flagFields=['favorite','recipeNeededLater','recipeIncomplete','imageSkipped'];
+    const now=Date.now();
+    incoming.forEach((d,i)=>{
+      const row=i+1;
+      if(!d || typeof d!=='object' || Array.isArray(d)){
+        issues.push({row,message:'This entry is not a drink record.'});
+        return;
+      }
+      const problems=[];
+      if(typeof d.name!=='string' || !d.name.trim()) problems.push('A nonblank drink name is needed.');
+      for(const field of textFields){
+        if(d[field]!=null && typeof d[field]!=='string') problems.push(field+' must contain text.');
+      }
+      for(const field of flagFields){
+        if(d[field]!=null && typeof d[field]!=='boolean') problems.push(field+' must be true or false.');
+      }
+      const rawRating=d.rating;
+      const rating=rawRating==null || rawRating===''?0:Number(rawRating);
+      if((rawRating!=null && typeof rawRating!=='string' && typeof rawRating!=='number') || !Number.isInteger(rating) || rating<0 || rating>5) problems.push('Rating must be a whole number from 0 to 5.');
+      if(problems.length){
+        issues.push({row,name:typeof d.name==='string'?d.name:'',message:problems.join(' ')});
+        return;
+      }
+      let id=d.id;
+      if(typeof id!=='string' || !/^[A-Za-z0-9_-]+$/.test(id) || used.has(id)){
+        const reason=used.has(id)?'Duplicate record ID':'Missing or incompatible record ID';
+        let suffix=0;
+        do {id='imported_'+now+'_'+i+(suffix?'_'+suffix:'');suffix++;} while(used.has(id)||reserved.has(id));
+        repairs.push({row,name:d.name,message:reason+' repaired. This drink is kept as a separate entry.'});
+      }
+      used.add(id);
+      cleaned.push({...d,id,rating,favorite:!!d.favorite,recipeNeededLater:!!(d.recipeNeededLater||d.recipeIncomplete),recipeIncomplete:!!(d.recipeIncomplete||d.recipeNeededLater),imageType:d.imageType||'placeholder',placeholderType:d.placeholderType||'generic',placeholderId:d.placeholderId||'generic',updatedAt:d.updatedAt||now,createdAt:d.createdAt||now});
+    });
+    return {drinks:cleaned,issues,repairs,total:incoming.length,version:Array.isArray(data)?'Legacy list':data.version||data.build||'Unknown',exportedAt:Array.isArray(data)?null:data.exportedAt};
+  }
+  function importPreviewHTML(review){
+    const names=review.drinks.map(d=>`<li>${esc(d.name)}${isIncomplete(d)?' — Recipe Incomplete':''}</li>`).join('');
+    const issueRows=review.issues.map(x=>`<li>Entry ${x.row}${x.name?': '+esc(x.name):''} — ${esc(x.message)}</li>`).join('');
+    const repairRows=review.repairs.map(x=>`<li>Entry ${x.row}: ${esc(x.name)} — ${esc(x.message)}</li>`).join('');
+    const warning=review.total===0?`<p class="small yellow">This backup is empty. Confirming will remove all ${drinks().length} currently saved drink(s).</p>`:`<p class="small yellow">Import will replace your current saved drink list after confirmation.</p>`;
+    const confirm=review.issues.length?'<p class="small yellow">No entries have been imported. Correct the flagged entries in the backup and choose the file again.</p>':`<button class="retro-btn pink" onclick="BB.confirmImport()">${review.total===0?'Replace With Empty Archive':'Replace Current Drinks'}</button>`;
+    return `<div class="modal-box"><h3>Preview JSON Backup</h3><p class="small">Backup version: <span class="cyan">${esc(review.version)}</span><br>Exported: <span class="cyan">${esc(friendlyDate(review.exportedAt))}</span><br>Current archive: <span class="hot">${drinks().length}</span> drink(s)</p><p class="small"><span class="cyan">${review.drinks.length} ready</span> · <span class="yellow">${review.issues.length} need review</span> · ${review.repairs.length} proposed repair(s)</p>${backupSummaryHTML(review.drinks)}<details class="import-review" open><summary>Ready entries</summary><ul class="import-preview-list">${names||'<li>No saved drinks in this backup.</li>'}</ul></details>${issueRows?`<details class="import-review" open><summary>Entries needing review</summary><ul class="import-preview-list">${issueRows}</ul></details>`:''}${repairRows?`<details class="import-review" open><summary>Proposed repairs</summary><ul class="import-preview-list">${repairRows}</ul></details>`:''}<div class="hr"></div>${warning}<div class="actions">${confirm}<button class="retro-btn grey" onclick="BB.keepEditing()">Cancel</button></div></div>`;
+  }
+  function storedDrafts(){
+    return ['new','edit'].map(type=>({type,draft:getDraft(draftKeyForMode(type))})).filter(x=>x.draft);
   }
   function friendlyDate(value){
     if(!value) return 'Unknown';
@@ -364,6 +424,29 @@
   function render(){ const screen=state.screen; const map={home,discover,quick,add,detail,bartender,favorites,backup,placeholder:placeholderScreen,loading,minimized,closed}; $app.innerHTML=(map[screen]||home)(); }
   function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
   function formObj(form){return Object.fromEntries(new FormData(form).entries());}
+  function canSaveForm(form){
+    const name=formObj(form).name;
+    if(typeof name!=='string' || !name.trim()){
+      toast('Enter a drink name before saving.');
+      form.querySelector?.('[name="name"]')?.focus();
+      return false;
+    }
+    return typeof form.reportValidity!=='function' || form.reportValidity();
+  }
+  function uniqueDrinkId(list=drinks()){
+    const used=new Set(list.map(d=>d.id));
+    const base='d'+Date.now();
+    let id=base, suffix=1;
+    while(used.has(id)) id=base+'_'+suffix++;
+    return id;
+  }
+  function recipeText(d){
+    if(!d) return '';
+    const ingredients=(d.ingredients||'').split('\n');
+    const measurements=(d.measurements||'').split('\n');
+    const rows=ingredients.map((name,i)=>[name,measurements[i]].filter(Boolean).join(' — ')).filter(Boolean);
+    return [d.name,d.flavor||'', 'INGREDIENTS',rows.join('\n')||'No ingredients saved yet.', 'GARNISH',d.garnish||'—', 'GLASS',d.glass||'—', 'NOTE TO BARTENDER',d.notes||'—', ...(d.instructions?['INSTRUCTIONS',d.instructions]:[])].join('\n\n');
+  }
   function download(name,text,type='text/plain'){const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type})); a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),500);}
   function toast(msg){$toast.textContent=msg;$toast.classList.remove('hidden');setTimeout(()=>$toast.classList.add('hidden'),1500)}
   function unsavedDialog(cb){$modal.innerHTML=`<div class="modal-box"><h3>Unsaved cocktail data detected.</h3><p>Save this drink before leaving?</p><div class="actions"><button class="retro-btn pink" onclick="BB.saveDraftThenContinue()">Save Drink</button><button class="retro-btn grey" onclick="BB.discardThenContinue()">Discard</button><button class="retro-btn" onclick="BB.keepEditing()">Keep Editing</button></div></div>`;$modal.classList.remove('hidden');state.pendingNav=cb;}
@@ -380,13 +463,24 @@
     goHome:()=>navigate('home',{message:'Reloading home page...',clearHistory:true}),
     minimize:()=>{ if(state.hasUnsaved) BB.saveCurrentDraftOnly(); navigate('minimized',{message:'Minimizing app...',skipUnsaved:true}); },
     maximize:()=>toast('Full browser mode comes in a later polish pass.'),
-    close:()=>{ if(state.hasUnsaved) return unsavedDialog(()=>navigate('closed',{skipUnsaved:true})); $modal.innerHTML=`<div class="modal-box"><h3>Close Bradley’s BoozeBrowser?</h3><p>Your drinks are saved locally in this browser.</p><div class="actions"><button class="retro-btn pink" onclick="BB.confirmClose()">Close App View</button><button class="retro-btn grey" onclick="BB.keepEditing()">Cancel</button></div></div>`;$modal.classList.remove('hidden');},
+    close:()=>{ if(state.hasUnsaved) return unsavedDialog(()=>{navigate('home',{instant:true,skipUnsaved:true,clearHistory:true});BB.close();}); $modal.innerHTML=`<div class="modal-box"><h3>Close Bradley’s BoozeBrowser?</h3><p>Your drinks are saved locally in this browser.</p><div class="actions"><button class="retro-btn pink" onclick="BB.confirmClose()">Close App View</button><button class="retro-btn grey" onclick="BB.keepEditing()">Cancel</button></div></div>`;$modal.classList.remove('hidden');},
     confirmClose:()=>{hideModal();navigate('closed',{skipUnsaved:true,message:'Closing app view...'})},
     reopen:()=>navigate('home',{message:'Reopening BoozeBrowser...',clearHistory:true}),
     search:v=>{state.search=v; const clearBtn=document.getElementById('clearSearchBtn'); if(clearBtn) clearBtn.style.display=v?'inline-block':'none'; if(state.screen==='home'){ const pane=document.querySelector('.home-scroll'); if(pane) pane.innerHTML=homeListHTML(); } else render();},
     clearSearch:()=>{state.search=''; const input=document.getElementById('drinkSearch'); if(input) input.value=''; const clearBtn=document.getElementById('clearSearchBtn'); if(clearBtn) clearBtn.style.display='none'; const pane=document.querySelector('.home-scroll'); if(pane) pane.innerHTML=homeListHTML(); input?.focus();},
     toggleFav:id=>{const all=drinks().map(d=>d.id===id?{...d,favorite:!d.favorite,updatedAt:Date.now()}:d);saveDrinks(all);render()},
-    copyRecipe:t=>navigator.clipboard?.writeText(t).then(()=>toast('Recipe copied')).catch(()=>toast('Copy blocked by browser')),
+    copyRecipe:async()=>{
+      const text=recipeText(selected());
+      try{
+        if(!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+        await navigator.clipboard.writeText(text);
+        toast('Recipe copied');
+      }catch(err){
+        $modal.innerHTML=`<div class="modal-box"><h3>Copy Recipe</h3><p class="small">Select the recipe below and use Copy on your phone or keyboard.</p><div class="field"><textarea id="copyRecipeText" aria-label="Complete recipe" readonly>${esc(text)}</textarea></div><div class="actions"><button class="retro-btn" onclick="BB.keepEditing()">Done</button></div></div>`;
+        $modal.classList.remove('hidden');
+        document.getElementById('copyRecipeText')?.select();
+      }
+    },
     toast,
     markUnsaved:()=>{state.hasUnsaved=true;},
     clearFormState:scope=>{clearFormState(scope||'active');},
@@ -396,7 +490,7 @@
       const o=formObj(form);
       delete o.id;
       o.mode='quick';
-      o.rating=Number(o.rating||4);
+      o.rating=Number(o.rating??4);
       o.recipeNeededLater=!!form.recipeNeededLater?.checked;
       o.imageSkipped=!!state.imageSkipped;
       if(state.placeholder){o.placeholderType=state.placeholder.type;o.placeholderId=state.placeholder.id;}
@@ -438,7 +532,7 @@
       const now=Date.now();
       const ph=state.placeholder||((state.draft?.placeholderId&&state.draft?.placeholderType)?{type:state.draft.placeholderType,id:state.draft.placeholderId}:null);
       const needsRecipe=!!form.recipeNeededLater?.checked;
-      const d={id:'d'+now,name:o.name||'Untitled Drink',baseSpirit:'',ingredients:'',measurements:'',instructions:'',garnish:'',glass:'',whereTried:o.whereTried||'',rating:Number(o.rating||4),notes:o.notes||'',favorite:false,recipeNeededLater:needsRecipe,recipeIncomplete:needsRecipe,imageType:'placeholder',placeholderType:ph?.type||'generic',placeholderId:ph?.id||'generic',imageSkipped:!!state.imageSkipped,flavor:needsRecipe?'Recipe Incomplete':'Quick saved drink',createdAt:now,updatedAt:now,lastOpenedAt:0};
+      const d={id:uniqueDrinkId(),name:o.name||'Untitled Drink',baseSpirit:'',ingredients:'',measurements:'',instructions:'',garnish:'',glass:'',whereTried:o.whereTried||'',rating:Number(o.rating||4),notes:o.notes||'',favorite:false,recipeNeededLater:needsRecipe,recipeIncomplete:needsRecipe,imageType:'placeholder',placeholderType:ph?.type||'generic',placeholderId:ph?.id||'generic',imageSkipped:!!state.imageSkipped,flavor:needsRecipe?'Recipe Incomplete':'Quick saved drink',createdAt:now,updatedAt:now,lastOpenedAt:0};
       saveDrinks([d,...drinks()]);
       return d;
     },
@@ -454,12 +548,13 @@
       const markedComplete=!!form.recipeComplete?.checked;
       const stillIncomplete=wasIncomplete&&!markedComplete;
       const noteFlavor=(o.notes||'').split('.')[0];
-      const d={...(existing||{}),id:existing?.id||('d'+now),name:o.name||'Untitled Drink',baseSpirit:o.baseSpirit||'',ingredients:o.ingredients||'',measurements:o.measurements||'',instructions:o.instructions||'',garnish:o.garnish||'',glass:o.glass||'',whereTried:o.whereTried||'',rating:Number(o.rating||0),notes:o.notes||'',favorite:!!form.favorite?.checked,recipeNeededLater:stillIncomplete,recipeIncomplete:stillIncomplete,imageType:existing?.imageType||'placeholder',placeholderType:ph?.type||existing?.placeholderType||'generic',placeholderId:ph?.id||existing?.placeholderId||'generic',imageSkipped:!!(state.imageSkipped||state.draft?.imageSkipped),flavor:stillIncomplete?'Recipe Incomplete':(noteFlavor || (existing?.flavor==='Recipe Incomplete'?'Saved cocktail':existing?.flavor) || 'Saved cocktail'),createdAt:existing?.createdAt||now,updatedAt:now,lastOpenedAt:existing?.lastOpenedAt||0};
+      const d={...(existing||{}),id:existing?.id||uniqueDrinkId(all),name:o.name||'Untitled Drink',baseSpirit:o.baseSpirit||'',ingredients:o.ingredients||'',measurements:o.measurements||'',instructions:o.instructions||'',garnish:o.garnish||'',glass:o.glass||'',whereTried:o.whereTried||'',rating:Number(o.rating||0),notes:o.notes||'',favorite:!!form.favorite?.checked,recipeNeededLater:stillIncomplete,recipeIncomplete:stillIncomplete,imageType:existing?.imageType||'placeholder',placeholderType:ph?.type||existing?.placeholderType||'generic',placeholderId:ph?.id||existing?.placeholderId||'generic',imageSkipped:!!(state.imageSkipped||state.draft?.imageSkipped),flavor:stillIncomplete?'Recipe Incomplete':(noteFlavor || (existing?.flavor==='Recipe Incomplete'?'Saved cocktail':existing?.flavor) || 'Saved cocktail'),createdAt:existing?.createdAt||now,updatedAt:now,lastOpenedAt:existing?.lastOpenedAt||0};
       saveDrinks(existing?all.map(x=>x.id===existing.id?d:x):[d,...all]);
       return d;
     },
     saveQuick:e=>{
       e.preventDefault();
+      if(!canSaveForm(e.target)) return;
       const d=BB.saveQuickFromForm(e.target);
       clearFormState('new');
       state.selectedId=d.id;
@@ -486,6 +581,7 @@
     },
     saveFull:e=>{
       e.preventDefault();
+      if(!canSaveForm(e.target)) return;
       const mode=(e.target.dataset.formMode==='edit'||state.formMode==='edit')?'edit':'new';
       const d=BB.saveFullFromForm(e.target);
       clearFormState(mode);
@@ -494,7 +590,7 @@
       navigate('detail',{skipUnsaved:true});
     },
     cancelEdit:()=>{
-      if(state.hasUnsaved) return unsavedDialog(()=>{const scope=state.formMode==='edit'?'edit':'new'; clearFormState(scope); navigate('home',{skipUnsaved:true,clearHistory:true});});
+      if(state.hasUnsaved) return unsavedDialog(()=>navigate('home',{skipUnsaved:true,clearHistory:true}));
       clearFormState(state.formMode==='edit'?'edit':'new');
       navigate('home',{skipUnsaved:true,clearHistory:true});
     },
@@ -570,39 +666,74 @@
     importJSON:e=>{
       const file=e.target.files?.[0];
       if(!file) return;
+      state.pendingImport=null;
+      state.pendingImportReview=null;
       const reader=new FileReader();
       reader.onload=()=>{
         try{
-          const data=JSON.parse(reader.result);
-          const incoming=Array.isArray(data)?data:data.drinks;
-          if(!Array.isArray(incoming)) throw new Error('No drinks array found');
-          const cleaned=incoming.filter(d=>d&&d.name).map((d,i)=>({...d,id:d.id||('imported_'+Date.now()+'_'+i),rating:Number(d.rating||0),favorite:!!d.favorite,recipeNeededLater:!!(d.recipeNeededLater||d.recipeIncomplete),recipeIncomplete:!!(d.recipeIncomplete||d.recipeNeededLater),imageType:d.imageType||'placeholder',placeholderType:d.placeholderType||'generic',placeholderId:d.placeholderId||'generic',updatedAt:d.updatedAt||Date.now(),createdAt:d.createdAt||Date.now()}));
-          if(!cleaned.length) throw new Error('Backup contained no named drinks');
-          const sample=cleaned.slice(0,4).map(d=>`<li>${esc(d.name)}</li>`).join('');
-          const extra=cleaned.length>4?`<li>...and ${cleaned.length-4} more</li>`:'';
-          $modal.innerHTML=`<div class="modal-box"><h3>Preview JSON Backup</h3><p class="small">Backup version: <span class="cyan">${esc(data.version||data.build||'Unknown')}</span><br>Exported: <span class="cyan">${esc(friendlyDate(data.exportedAt))}</span><br>Current archive: <span class="hot">${drinks().length}</span> drink(s)</p>${backupSummaryHTML(cleaned)}<ul class="import-preview-list">${sample}${extra}</ul><div class="hr"></div><p class="small yellow">Import will replace your current saved drink list after confirmation.</p><div class="actions"><button class="retro-btn pink" onclick="BB.confirmImport()">Replace Current Drinks</button><button class="retro-btn grey" onclick="BB.keepEditing()">Cancel</button></div></div>`;
-          state.pendingImport=cleaned;
+          const review=reviewBackup(reader.result);
+          state.pendingImport=review.drinks;
+          state.pendingImportReview=review;
+          $modal.innerHTML=importPreviewHTML(review);
           $modal.classList.remove('hidden');
-        }catch(err){toast('Import failed: invalid JSON backup');}
+        }catch(err){
+          toast('Import failed: '+(err instanceof SyntaxError?'This file is not readable JSON.':err.message));
+        }
       };
+      reader.onerror=()=>toast('This backup could not be read. Choose the file again.');
       reader.readAsText(file);
       e.target.value='';
     },
     confirmImport:()=>{
-      if(!state.pendingImport) return;
-      saveDrinks(state.pendingImport);
+      if(!Array.isArray(state.pendingImport) || state.pendingImportReview?.issues.length) return;
+      const drafts=storedDrafts();
+      if(drafts.length){
+        const list=drafts.map(x=>`<li>${esc(x.draft.name||'Unnamed drink')} (${x.type==='edit'?'edit':'new drink'})</li>`).join('');
+        $modal.innerHTML=`<div class="modal-box"><h3>Save or discard unfinished drinks</h3><p class="small">Your backup has not been imported. Save or discard these drafts before replacing your archive.</p><ul class="import-preview-list">${list}</ul><div class="actions"><button class="retro-btn pink" onclick="BB.reviewDraftBeforeImport()">Save First</button><button class="retro-btn grey" onclick="BB.discardDraftsAndImport()">Discard Drafts and Import</button><button class="retro-btn" onclick="BB.keepEditing()">Cancel Import</button></div></div>`;
+        $modal.classList.remove('hidden');
+        return;
+      }
+      BB.completeImport();
+    },
+    completeImport:()=>{
+      if(!Array.isArray(state.pendingImport) || state.pendingImportReview?.issues.length || storedDrafts().length) return;
+      const incoming=state.pendingImport;
+      saveDrinks(incoming);
       localStorage.removeItem(RECENT_KEY);
       clearFormState('all');
       state.selectedId=drinks()[0]?.id;
       state.pendingImport=null;
+      state.pendingImportReview=null;
       hideModal();
       toast(`JSON backup imported: ${drinks().length} drinks`);
       navigate('home',{skipUnsaved:true,clearHistory:true});
     },
+    reviewDraftBeforeImport:()=>{
+      const first=storedDrafts()[0];
+      state.pendingImport=null;
+      state.pendingImportReview=null;
+      hideModal();
+      if(first){
+        BB.continueDraft(first.type);
+        toast('Save your draft, then choose the backup again.');
+      }
+    },
+    discardDraftsAndImport:()=>{
+      if(!Array.isArray(state.pendingImport) || state.pendingImportReview?.issues.length) return;
+      clearFormState('all');
+      BB.completeImport();
+    },
     saveDraftThenContinue:()=>{
-      const form=document.querySelector('form[data-drink-form]');
+      const next=state.pendingNav;
+      let form=document.querySelector('form[data-drink-form]');
+      if(!form && state.draft){
+        state.screen=state.draft.mode==='quick'?'quick':'add';
+        render();
+        form=document.querySelector('form[data-drink-form]');
+      }
       let saved=null;
       if(form){
+        if(!canSaveForm(form)){hideModal();state.pendingNav=null;return;}
         const mode=(form.dataset.formMode==='edit'||state.formMode==='edit')?'edit':'new';
         saved=form.dataset.drinkForm==='quick'?BB.saveQuickFromForm(form):BB.saveFullFromForm(form);
         state.selectedId=saved.id;
@@ -613,15 +744,17 @@
         state.hasUnsaved=false;
       }
       hideModal();
-      state.pendingNav?.();
+      state.pendingNav=null;
+      next?.();
     },
     discardThenContinue:()=>{
+      const next=state.pendingNav;
       const scope=state.formMode==='edit'?'edit':'new';
       hideModal();
       clearFormState(scope);
-      state.pendingNav?.();
+      next?.();
     },
-    keepEditing:()=>{hideModal();}
+    keepEditing:()=>{hideModal();state.pendingNav=null;state.pendingImport=null;state.pendingImportReview=null;}
   }
   setStatus(BUILD_LABEL); render();
 })();

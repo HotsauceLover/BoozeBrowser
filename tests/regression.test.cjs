@@ -33,6 +33,9 @@ function environment(seed=[original,incomplete], extraStorage={}, options={}){
       }
     }];
   }));
+  elements.homeResults={innerHTML:'',parentElement:{scrollTop:0}};
+  elements.clearSearchBtn={style:{}};
+  elements.drinkSearch={value:'',focus(){this.focused=true;}};
   const navigationTimers=[];
   const listeners=new Map();
   let activeForm=null;
@@ -113,13 +116,49 @@ function keepDraft(env){
   env.setForm(null);
 }
 function importBackup(env, data){env.c.BB.importJSON({target:{files:[{text:typeof data==='string'?data:JSON.stringify(data)}],value:'fixture.json'}});}
+function savedDrinkNames(markup){
+  return [...markup.matchAll(/class="drink-name">([^<]*)<\/div>/g)].map(match=>match[1]);
+}
 
 test('Alpha identity agrees across title, status and JSON export',()=>{
   const e=environment();const backup=e.a.backupPayload();
-  assert.match(html,/<title>[^<]*Alpha 4<\/title>/);
-  assert.equal(backup.version,'v0.5.0-alpha.4');
+  assert.match(html,/<title>[^<]*Alpha 5<\/title>/);
+  assert.equal(backup.version,'v0.5.0-alpha.5');
   assert.equal(backup.build,'Build '+backup.version);
-  assert.match(e.e.app.innerHTML,/Build v0\.5\.0-alpha\.4/);
+  assert.match(e.e.app.innerHTML,/Build v0\.5\.0-alpha\.5/);
+});
+test('search ranks exact names, prefixes, and partial matches in saved order within each group',()=>{
+  const archive=['Whiskey Sour','Sour Cherry','SOUR','Pisco Sour','Sour Apple','Sour','Gimlet'];
+  const e=environment(archive.map((name,index)=>({...original,id:'search-'+index,name})));
+  e.c.BB.search('  sOuR  ');
+  assert.deepEqual(savedDrinkNames(e.e.homeResults.innerHTML),['SOUR','Sour','Sour Cherry','Sour Apple','Whiskey Sour','Pisco Sour']);
+  assert.match(e.e.homeResults.innerHTML,/Saved Drinks \(6\)/);
+  assert.deepEqual(plain(e.a.drinks().map(drink=>drink.name)),archive);
+});
+test('blank search shows the archive and an unmatched drink name shows an empty result',()=>{
+  const e=environment();
+  e.c.BB.search('   ');
+  assert.deepEqual(savedDrinkNames(e.e.homeResults.innerHTML),[original.name,incomplete.name]);
+  e.c.BB.search('Rum');
+  assert.deepEqual(savedDrinkNames(e.e.homeResults.innerHTML),[]);
+  assert.match(e.e.homeResults.innerHTML,/Saved Drinks \(0\)/);
+  assert.match(e.e.homeResults.innerHTML,/No saved drinks match that search/);
+});
+test('clearing search restores Recently Opened, archive order and input focus',()=>{
+  const e=environment(undefined,{bb_v04_recent:JSON.stringify([original.id])});
+  e.e.drinkSearch.value=incomplete.name;
+  e.e.homeResults.parentElement.scrollTop=200;
+  e.c.BB.search(e.e.drinkSearch.value);
+  assert.deepEqual(savedDrinkNames(e.e.homeResults.innerHTML),[incomplete.name]);
+  assert.doesNotMatch(e.e.homeResults.innerHTML,/Recently Opened/);
+  assert.equal(e.e.homeResults.parentElement.scrollTop,0);
+  assert.equal(e.e.clearSearchBtn.style.display,'inline-block');
+  e.c.BB.clearSearch();
+  assert.match(e.e.homeResults.innerHTML,/Recently Opened/);
+  assert.deepEqual(savedDrinkNames(e.e.homeResults.innerHTML),[original.name,incomplete.name]);
+  assert.equal(e.e.drinkSearch.value,'');
+  assert.equal(e.e.drinkSearch.focused,true);
+  assert.equal(e.e.clearSearchBtn.style.display,'none');
 });
 test('opening an edit then Add creates a different identity and preserves the original',()=>{
   const e=environment();e.a.state.selectedId=original.id;e.c.BB.editSelected();e.c.BB.startAdd();
